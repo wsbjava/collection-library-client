@@ -13,7 +13,7 @@ public class MainApp extends Application {
             primaryStage.setTitle("Aplikacja do zarządzania wypożyczeniami");
             primaryStage.resizableProperty().setValue(Boolean.FALSE);
             FXMLLoader loader;
-            loader = new FXMLLoader(getClass().getClassLoader().getResource("view/login.fxml"));
+            loader = new FXMLLoader(getClass().getClassLoader().getResource("view/mainAdminView.fxml"));
             AnchorPane rootLayout = loader.load();
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);

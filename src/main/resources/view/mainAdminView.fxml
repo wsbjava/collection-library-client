@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.wsb.collection.controller.AdminController">
+   <children>
+      <Button fx:id="btnCollection" mnemonicParsing="false" text="Widok zasobów" />
+      <Button fx:id="btnAddEntry" layoutX="125.0" mnemonicParsing="false" text="Dodaj zasób" />
+      <Button fx:id="btnRentals" layoutX="304.0" mnemonicParsing="false" text="Rezerwacje" />
+      <Button fx:id="btnMessages" layoutX="398.0" mnemonicParsing="false" text="Wiadomości" />
+      <Button fx:id="btnSuggestions" layoutX="227.0" mnemonicParsing="false" text="Sugestie" />
+      <Button fx:id="btnUsers" layoutX="500.0" mnemonicParsing="false" text="Użytkownicy" />
+   </children>
+</AnchorPane>
