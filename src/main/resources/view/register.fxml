@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.wsb.collection.controller.RegisterController">
+   <children>
+      <Button fx:id="btnRegister" layoutX="460.0" layoutY="157.0" mnemonicParsing="false" text="Zarejestruj" />
+      <PasswordField fx:id="pfPasswordCont" layoutX="207.0" layoutY="161.0" />
+      <PasswordField fx:id="pfPassword" layoutX="207.0" layoutY="105.0" />
+      <TextField fx:id="tfEmail" layoutX="207.0" layoutY="53.0" />
+      <TextField fx:id="tfSurname" layoutX="207.0" layoutY="269.0" />
+      <TextField fx:id="tfName" layoutX="208.0" layoutY="217.0" />
+      <Label layoutX="207.0" layoutY="32.0" prefHeight="21.0" prefWidth="56.0" text="E-mail" />
+      <Label layoutX="207.0" layoutY="84.0" text="Haslo" />
+      <Label layoutX="207.0" layoutY="136.0" text="Powtórz hasło" />
+      <Label layoutX="207.0" layoutY="190.0" text="Imię" />
+      <Label layoutX="205.0" layoutY="248.0" text="Nazwisko" />
+      <TextField fx:id="tfAge" layoutX="208.0" layoutY="335.0" />
+      <Label layoutX="205.0" layoutY="308.0" text="Data urodzenia (dd-mm-rrrr)" />
+   </children>
+</AnchorPane>

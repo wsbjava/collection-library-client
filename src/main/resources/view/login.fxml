@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="326.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.wsb.collection.controller.LoginController">
+   <children>
+      <Button fx:id="btnLogin" layoutX="198.0" layoutY="191.0" mnemonicParsing="false" text="Zaloguj" />
+      <Button fx:id="btnRegister" layoutX="187.0" layoutY="244.0" mnemonicParsing="false" text="Rejestracja" />
+      <PasswordField fx:id="pfPassword" layoutX="139.0" layoutY="146.0" />
+      <TextField fx:id="tfLogin" layoutX="139.0" layoutY="82.0" />
+      <Label layoutX="139.0" layoutY="51.0" prefHeight="31.0" prefWidth="106.0" text="Adres e-mail" />
+      <Label layoutX="139.0" layoutY="125.0" prefHeight="21.0" prefWidth="56.0" text="Hasło" />
+   </children>
+</AnchorPane>
