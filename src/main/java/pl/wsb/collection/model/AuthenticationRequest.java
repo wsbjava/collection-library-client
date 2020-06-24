@@ -23,7 +23,7 @@ import javax.validation.constraints.*;
 /**
  * AuthenticationRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2020-06-15T21:16:59.062Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2020-06-08T19:18:47.684Z")
 public class AuthenticationRequest   {
   @JsonProperty("e-mail")
   private String eMail = null;

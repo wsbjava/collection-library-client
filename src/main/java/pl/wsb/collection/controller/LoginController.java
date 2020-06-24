@@ -19,14 +19,18 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import pl.wsb.collection.exceptions.ValidationException;
 import pl.wsb.collection.model.AuthenticationRequest;
+import pl.wsb.collection.model.AuthenticationResponse;
+import pl.wsb.collection.model.RoleResponse;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class LoginController {
 
     Stage stage;
     Parent root;
+    private boolean AdminLogon;
 
     @FXML
     private TextField tfLogin;
@@ -143,6 +147,45 @@ public class LoginController {
         if (response.getStatusLine() == null) {
             return false;
         } //if
+        AuthenticationResponse authResponse = new ObjectMapper().readValue(response.getEntity().getContent(), AuthenticationResponse.class);
+        List<RoleResponse> roles = authResponse.getRole();
+        for (int i = 0; i<roles.size(); i++ ) {
+            if(roles.get(i).getId()==1)
+            {
+                AdminLogon = true;
+            }
+        }
+        if(AdminLogon)
+        {
+            stage = (Stage) btnRegister.getScene().getWindow();
+            FXMLLoader loader;
+            loader = new FXMLLoader(getClass().getClassLoader().getResource("view/mainAdminView.fxml"));
+            AnchorPane rootLayout = null;
+            try {
+                rootLayout = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Scene scene = new Scene(Objects.requireNonNull(rootLayout));
+            stage.setScene(scene);
+            stage.show();
+        }
+        else
+        {
+            stage = (Stage) btnRegister.getScene().getWindow();
+            FXMLLoader loader;
+            loader = new FXMLLoader(getClass().getClassLoader().getResource("view/mainUserView.fxml"));
+            AnchorPane rootLayout = null;
+            try {
+                rootLayout = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Scene scene = new Scene(Objects.requireNonNull(rootLayout));
+            stage.setScene(scene);
+            stage.show();
+        }
+
         return (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK);
     }
 
