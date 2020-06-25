@@ -78,7 +78,7 @@ public class AdminController {
     private void handleCollectionClick(ActionEvent actionEvent) {
         stage = (Stage) btnCollection.getScene().getWindow();
         FXMLLoader loader;
-        loader = new FXMLLoader(getClass().getClassLoader().getResource("view/adminCollectionView.fxml"));
+        loader = new FXMLLoader(getClass().getClassLoader().getResource("view/collectionView.fxml"));
         AnchorPane rootLayout = null;
         try {
             rootLayout = loader.load();

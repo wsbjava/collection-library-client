@@ -29,6 +29,7 @@ import pl.wsb.collection.model.ItemRequest;
 
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.Objects;
@@ -74,9 +75,14 @@ public class AddItemController {
         if (this.btnReturn != null) {
             this.btnReturn.setOnAction(this::handleReturnClick);
         }
-        System.out.println(SessionController.get().geteMail());
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet("http://127.0.0.1:8080/webapi/collection_type");
+        HttpGet httpGet = null;
+        try {
+            httpGet = new HttpGet(String.valueOf(new URL(ApiEndpoints.MainPath +
+                    ApiEndpoints.AUTHENTICATE)));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        };
         httpGet.setHeader("Accept", "application/json");
         httpGet.setHeader("Content-type", "application/json");
         CloseableHttpResponse response = null;

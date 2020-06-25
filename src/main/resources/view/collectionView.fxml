@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.wsb.collection.controller.AdminCollectionViewController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.wsb.collection.controller.collectionViewController">
    <children>
       <Button fx:id="btnReturn" layoutX="1032.0" layoutY="679.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="105.0" text="Powrót" />
       <TableView fx:id="tbCollection" layoutX="136.0" layoutY="67.0" prefHeight="626.0" prefWidth="787.0" />

@@ -156,6 +156,7 @@ public class LoginController {
         for (RoleResponse role : roles) {
             if (role.getId() == 1) {
                 AdminLogon = true;
+                SessionController.get().SetAdmin();
             }
         }
         if(AdminLogon)

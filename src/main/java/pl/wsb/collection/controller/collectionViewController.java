@@ -31,7 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
-public class AdminCollectionViewController {
+public class collectionViewController {
 
     Stage stage;
 
@@ -58,44 +58,18 @@ public class AdminCollectionViewController {
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         TableColumn<String, Item> genre = new TableColumn<>("Gatunek");
         genre.setCellValueFactory(new PropertyValueFactory<>("genre"));
-        TableColumn erase = new TableColumn<>("Usuń");
+
 
 
         tbCollection.getColumns().add(title);
         tbCollection.getColumns().add(publisher);
         tbCollection.getColumns().add(type);
         tbCollection.getColumns().add(genre);
-        tbCollection.getColumns().add(erase);
 
-        Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory
-                = //
-                new Callback<TableColumn<Item, String>, TableCell<Item, String>>() {
-                    @Override
-                    public TableCell call(final TableColumn<Item, String> param) {
-                        final TableCell<Item, String> cell = new TableCell<Item, String>() {
 
-                            final Button btn = new Button("Usuń");
-
-                            @Override
-                            public void updateItem(String item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setGraphic(null);
-                                    setText(null);
-                                } else {
-                                    btn.setOnAction(event -> {
-                                        Item Item = getTableView().getItems().get(getIndex());
-                                        System.out.println(Item);
-                                    });
-                                    setGraphic(btn);
-                                    setText(null);
-                                }
-                            }
-                        };
-                        return cell;
-                    }
-                };
-        erase.setCellFactory(cellFactory);
+        if(SessionController.get().IsAdmin()) {
+           addEraseButton();
+        }
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(String.valueOf(new URL(ApiEndpoints.MainPath +
                 ApiEndpoints.COLLECTION_ENTRY)));
@@ -141,6 +115,40 @@ public class AdminCollectionViewController {
         stage.show();
     }
 
+    private void addEraseButton()
+    {
+        TableColumn erase = new TableColumn<>("Usuń");
+        tbCollection.getColumns().add(erase);
+        Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory
+                = //
+                new Callback<TableColumn<Item, String>, TableCell<Item, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Item, String> param) {
+                        final TableCell<Item, String> cell = new TableCell<Item, String>() {
+
+                            final Button btn = new Button("Usuń");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        Item Item = getTableView().getItems().get(getIndex());
+                                        System.out.println(Item);
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        erase.setCellFactory(cellFactory);
+    }
     private void handleErase(int id)
     {
         CloseableHttpClient client = HttpClients.createDefault();
