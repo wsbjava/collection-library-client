@@ -2,6 +2,7 @@ package pl.wsb.collection.controller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,9 +54,12 @@ public class AddItemController {
     private TextField tfName;
     @FXML
     private TextField tfSurname;
-    @FXML
 
+    @FXML
     private ChoiceBox<String> cbType;
+
+    @FXML
+    private ChoiceBox<String> cbGenre;
 
 
 
@@ -87,6 +91,8 @@ public class AddItemController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        cbType.setItems(FXCollections.observableArrayList("BOOK","COMICS","DISC"));
+        cbGenre.setItems(FXCollections.observableArrayList("Action","Comedy","Drama"));
     }
 
     private Alert createAlert(String title, String header, String content, Alert.AlertType alertType) {
@@ -129,17 +135,18 @@ public class AddItemController {
             if (this.tfDate == null) {
                 return;
             } //if
-            if (this.tfGenre == null) {
+            if (this.cbGenre == null) {
                 return;
             } //if
-            if (this.tfType == null) {
+            if (this.cbType == null) {
                 return;
             } //if
             if (this.tfPublisher == null) {
                 return;
             } //if
+            System.out.println(this.cbType.getValue());
             if (this.handleAddCall(this.tfTitle.getText(),
-                    this.tfName.getText(),this.tfSurname.getText(),this.tfDate.getText(),this.tfGenre.getText(),this.tfType.getText(),this.tfPublisher.getText())) {
+                    this.tfName.getText(),this.tfSurname.getText(),this.tfDate.getText(),this.cbGenre.getValue(),this.cbType.getValue(),this.tfPublisher.getText())) {
                 createAlert(
                         "Dodawanie - sukces",
                         "Sukces",
