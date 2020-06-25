@@ -17,12 +17,14 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import pl.wsb.collection.controller.consts.ApiEndpoints;
 import pl.wsb.collection.exceptions.ValidationException;
 import pl.wsb.collection.model.AuthenticationRequest;
 import pl.wsb.collection.model.AuthenticationResponse;
 import pl.wsb.collection.model.RoleResponse;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 public class LoginController {
@@ -130,7 +132,8 @@ public class LoginController {
             throw new ValidationException();
         } //if
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/webapi/authenticate");
+        HttpPost httpPost = new HttpPost(String.valueOf(new URL(ApiEndpoints.MainPath +
+                ApiEndpoints.AUTHENTICATE)));
         ObjectMapper objectMapper = new ObjectMapper();
         StringEntity requestEntity = new StringEntity(
                 objectMapper.writeValueAsString(

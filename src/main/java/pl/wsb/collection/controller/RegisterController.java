@@ -16,9 +16,11 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import pl.wsb.collection.controller.consts.ApiEndpoints;
 import pl.wsb.collection.exceptions.ValidationException;
 import pl.wsb.collection.model.RegisterUserRequest;
 
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -154,7 +156,8 @@ public class RegisterController {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date convertDateOfBirth = formatter.parse(dateOfBirth);
 
-        HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/webapi/user");
+        HttpPost httpPost = new HttpPost(String.valueOf(new URL(ApiEndpoints.MainPath +
+                ApiEndpoints.USER)));
         ObjectMapper objectMapper = new ObjectMapper();
         StringEntity requestEntity = new StringEntity(
                 objectMapper.writeValueAsString(

@@ -20,6 +20,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import pl.wsb.collection.controller.consts.ApiEndpoints;
 import pl.wsb.collection.exceptions.ValidationException;
 import pl.wsb.collection.model.AuthenticationRequest;
 import pl.wsb.collection.model.AuthenticationResponse;
@@ -28,6 +29,7 @@ import pl.wsb.collection.model.ItemRequest;
 
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.Objects;
 import java.text.SimpleDateFormat;
@@ -202,7 +204,8 @@ public class AddItemController {
         } //if
         logOn();
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/webapi/collectionEntry");
+        HttpPost httpPost = new HttpPost(String.valueOf(new URL(ApiEndpoints.MainPath +
+                ApiEndpoints.COLLECTION_ENTRY)));
         ObjectMapper objectMapper = new ObjectMapper();
         StringEntity requestEntity = null;
         try {
