@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import pl.wsb.collection.controller.SessionController;
 
 public class MainApp extends Application {
+
     @Override
     public void start(Stage primaryStage) {
         try {

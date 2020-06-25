@@ -1,5 +1,6 @@
 package pl.wsb.collection.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,9 +20,12 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import pl.wsb.collection.exceptions.ValidationException;
+import pl.wsb.collection.model.AuthenticationRequest;
+import pl.wsb.collection.model.AuthenticationResponse;
 import pl.wsb.collection.model.AuthorRequest;
 import pl.wsb.collection.model.ItemRequest;
 
+import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Objects;
@@ -29,6 +33,7 @@ import java.text.SimpleDateFormat;
 
 public class AddItemController {
     Stage stage;
+    private AuthenticationResponse authResponse;
 
     @FXML
     private Button btnAdd;
@@ -63,6 +68,7 @@ public class AddItemController {
         if (this.btnReturn != null) {
             this.btnReturn.setOnAction(this::handleReturnClick);
         }
+        System.out.println(SessionController.get().geteMail());
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet("http://127.0.0.1:8080/webapi/collection_type");
         httpGet.setHeader("Accept", "application/json");
@@ -187,6 +193,7 @@ public class AddItemController {
         if (StringUtils.isBlank(publisher)) {
             throw new ValidationException();
         } //if
+        logOn();
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/webapi/collectionEntry");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -194,7 +201,9 @@ public class AddItemController {
         try {
             requestEntity = new StringEntity(
                     objectMapper.writeValueAsString(
-                            new ItemRequest().title(title).author(new AuthorRequest().firstName(name).lastName(surname)).dateOfRelease(new SimpleDateFormat("dd-MM-yyyy").parse(date)).type(type).genre(genre).publisher(publisher)
+                            new ItemRequest().title(title).author(new AuthorRequest().firstName(name).
+                                    lastName(surname)).dateOfRelease(new SimpleDateFormat("dd-MM-yyyy").parse(date)).
+                                    type(type).genre(genre).publisher(publisher)
                     ),
                     ContentType.APPLICATION_JSON
             );
@@ -202,6 +211,7 @@ public class AddItemController {
             e.printStackTrace();
         }
         httpPost.setEntity(requestEntity);
+        httpPost.setHeader(HttpHeaders.AUTHORIZATION, "Bearer: "+ this.authResponse.getAccessToken());
         httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader("Content-type", "application/json");
         CloseableHttpResponse response = client.execute(httpPost);
@@ -212,5 +222,50 @@ public class AddItemController {
             return false;
         } //if
         return (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK);
+    }
+
+    void logOn(){
+        try {
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/webapi/authenticate");
+            ObjectMapper objectMapper = new ObjectMapper();
+            StringEntity requestEntity = new StringEntity(
+                    objectMapper.writeValueAsString(
+                            new AuthenticationRequest()
+                                    .eMail(SessionController.get().geteMail())
+                                    .password(SessionController.get().getPassword())
+                    ),
+                    ContentType.APPLICATION_JSON
+            );
+            httpPost.setEntity(requestEntity);
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+            CloseableHttpResponse response = client.execute(httpPost);
+
+
+            this.authResponse = new ObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+                    .readValue(response.getEntity().getContent(), AuthenticationResponse.class);
+
+
+            System.out.println(this.authResponse.getAccessToken());
+            System.out.println(this.authResponse.getEmailAddress());
+            System.out.println(this.authResponse.getExpiresIn());
+            System.out.println(this.authResponse.getUserId());
+            this.authResponse.getRole().forEach((e)->
+            {
+                System.out.println(e.getAbbr() + " "+ e.getName());
+            });
+
+
+        }
+        catch (IOException ioExp){
+
+            System.out.println(ioExp.getMessage());
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

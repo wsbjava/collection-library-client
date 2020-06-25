@@ -25,7 +25,6 @@ import pl.wsb.collection.model.RoleResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-
 public class LoginController {
 
     Stage stage;
@@ -88,6 +87,8 @@ public class LoginController {
             } //if
             if (this.handleLoginCall(this.tfLogin.getText(),
                     this.pfPassword.getText())) {
+           SessionController.get().SeteMail(this.tfLogin.getText());
+           SessionController.get().SetPassword(this.pfPassword.getText());
                 createAlert(
                         "Logowanie - sukces",
                         "Sukces",
@@ -149,15 +150,14 @@ public class LoginController {
         } //if
         AuthenticationResponse authResponse = new ObjectMapper().readValue(response.getEntity().getContent(), AuthenticationResponse.class);
         List<RoleResponse> roles = authResponse.getRole();
-        for (int i = 0; i<roles.size(); i++ ) {
-            if(roles.get(i).getId()==1)
-            {
+        for (RoleResponse role : roles) {
+            if (role.getId() == 1) {
                 AdminLogon = true;
             }
         }
         if(AdminLogon)
         {
-            stage = (Stage) btnRegister.getScene().getWindow();
+            stage = (Stage) btnLogin.getScene().getWindow();
             FXMLLoader loader;
             loader = new FXMLLoader(getClass().getClassLoader().getResource("view/mainAdminView.fxml"));
             AnchorPane rootLayout = null;
@@ -172,7 +172,7 @@ public class LoginController {
         }
         else
         {
-            stage = (Stage) btnRegister.getScene().getWindow();
+            stage = (Stage) btnLogin.getScene().getWindow();
             FXMLLoader loader;
             loader = new FXMLLoader(getClass().getClassLoader().getResource("view/mainUserView.fxml"));
             AnchorPane rootLayout = null;
